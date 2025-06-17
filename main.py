@@ -14,7 +14,7 @@ import cv2
 app = FastAPI()
 
 
-model = load_model("models/custom_asl_model_v2_Z.keras")
+model = load_model("models/custom_asl_model_v3_Z.keras")
 
 
 app.add_middleware(
