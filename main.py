@@ -1,8 +1,6 @@
 # main.py
 from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.responses import JSONResponse
-import os
-import shutil
 from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
 import tensorflow as tf
@@ -29,25 +27,6 @@ app.add_middleware(
 @app.get("/hello/")
 def say_hello():
     return {"message": f"Hello"}
-
-
-@app.post("/upload/")
-async def upload_image(
-    image: UploadFile = File(...)
-):
-    label = "A"
-    UPLOAD_DIR = os.path.join("uploaded_images_v2/test", label)
-    os.makedirs(UPLOAD_DIR, exist_ok=True)
-    filename = f"{label}_{image.filename}"
-    file_path = os.path.join(UPLOAD_DIR, filename)
-
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(image.file, buffer)
-
-    return JSONResponse(
-        content={"message": "Image uploaded successfully", "filename": filename},
-        status_code=200
-    )
 
 
 @app.post("/predict/")
